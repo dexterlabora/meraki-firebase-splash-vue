@@ -1,0 +1,35 @@
+{
+  "database": {
+    "rules": "database.rules.json"
+  },
+  "hosting": {
+    "public": "dist",
+    "ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+
+    "rewrites": [
+      {
+        "source": "/splashAuth",
+        "function": "authClient"
+      },
+      {
+        "source": "/merakiDetails",
+        "function": "merakiDetails"
+      },
+      {
+        "source": "/merakiAuth",
+        "function": "merakiAuth"
+      },
+      {
+        "source": "/merakiPolicy",
+        "function": "merakiPolicy"
+      },
+      {
+        "source": "**",
+        "destination": "/index.html"
+      }
+    ]
+  },
+  "storage": {
+    "rules": "storage.rules"
+  }
+}

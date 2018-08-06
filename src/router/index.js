@@ -1,51 +1,65 @@
-import Vue from 'vue'
-import Router from 'vue-router'
+import Vue from "vue";
+import Router from "vue-router";
 
-import Hello from '@/components/Hello'
-import Login from '@/components/Login'
-import SignUp from '@/components/SignUp'
-import firebase from 'firebase'
+//import Hello from "@/components/Hello";
+import Splash from "@/components/Splash";
+import FirebaseLogin from "@/components/FirebaseLogin";
+import SignUp from "@/components/SignUp";
+import LoggedOut from "@/components/LoggedOut";
+import Terms from "@/components/Terms";
+import firebase from "firebase";
 
-Vue.use(Router)
+Vue.use(Router);
 
 let router = new Router({
+  mode: "history",
   routes: [
     {
-      path: '*',
-      redirect: '/login'
+      path: "*",
+      redirect: "/splash"
     },
     {
-      path: '/',
-      redirect: '/login'
+      path: "/",
+      redirect: "/splash"
     },
     {
-      path: '/login',
-      name: 'Login',
-      component: Login
+      path: "/splash",
+      name: "Splash",
+      component: Splash
     },
     {
-      path: '/sign-up',
-      name: 'SignUp',
+      path: "/login",
+      name: "Login",
+      component: FirebaseLogin
+    },
+    {
+      path: "/sign-up",
+      name: "SignUp",
       component: SignUp
     },
     {
-      path: '/hello',
-      name: 'Hello',
-      component: Hello,
-      meta: {
-        requiresAuth: true
-      }
+      path: "/logged-out",
+      name: "LoggedOut",
+      component: LoggedOut
+    },
+    {
+      path: "/terms",
+      name: "Terms",
+      component: Terms
     }
   ]
-})
+});
 
+// Protect routes
+/*
 router.beforeEach((to, from, next) => {
   let currentUser = firebase.auth().currentUser;
   let requiresAuth = to.matched.some(record => record.meta.requiresAuth);
 
-  if (requiresAuth && !currentUser) next('login')
-  else if (!requiresAuth && currentUser) next('hello')
-  else next()
-})
+  if (requiresAuth && !currentUser) next("splash");
+  else if (!requiresAuth && currentUser) next("hello");
+  else next();
+});
+*/
 
-export default router
+export default router;

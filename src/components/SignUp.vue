@@ -1,56 +1,90 @@
+
 <template>
-  <div class="sign-up">
-    <p>Let's create a new account !</p>
-    <input type="text" v-model="email" placeholder="Email"><br>
-    <input type="password" v-model="password" placeholder="Password"><br>
-    <button v-on:click="signUp">Sign Up</button>
-    <span>or go back to <router-link to="/login">login</router-link>.</span>
-  </div>
+  <div>
+
+            <h1>New Account Registration</h1>
+            <p>Provide an email and password to access this network.</p>
+            <v-card class="elevation-12">
+              <v-card-text>
+                <v-form ref="form" v-model="valid" lazy-validation>
+                  <v-text-field
+                    prepend-icon="email"
+                    v-model="email"
+                    :rules="emailRules"
+                    label="E-mail"
+                    required
+                  ></v-text-field>
+                  <v-text-field
+                    prepend-icon="lock"
+                    v-model="password"
+                    :rules="passwordRules"
+                    label="password"
+                    required
+                  ></v-text-field>
+                  <!--v-checkbox
+                    v-model="terms"
+                    :rules="[v => !!v || 'You must agree to continue!']"
+                    label="T&Cs"
+                    required
+                  ><a href="/terms">Read More</a></v-checkbox -->
+
+                  <v-btn
+                    :disabled="!valid"
+                    color="green"
+                    @click="submit"
+                  >
+                    Register
+                  </v-btn>
+                </v-form>
+               
+              </v-card-text>
+            </v-card>
+             <div class="pt-3"><span>or go back to <router-link to="/">login</router-link>.</span></div>
+             <div class="pt-3"><router-link to="/terms">Terms and Conditions</router-link></div>
+
+   </div>
 </template>
 
 <script>
-  import firebase from 'firebase'
+import firebase from "firebase";
 
-  export default {
-    name: 'signUp',
-    data: function() {
-      return {
-        email: '',
-        password: ''
+export default {
+  name: "signUp",
+  data: function() {
+    return {
+      valid: true,
+      name: "",
+      passwordRules: [v => !!v || "Password is required"],
+      email: "",
+      password: "",
+      emailRules: [
+        v => !!v || "E-mail is required",
+        v => /.+@.+/.test(v) || "E-mail must be valid"
+      ],
+      select: null
+    };
+  },
+  methods: {
+    submit() {
+      if (this.$refs.form.validate()) {
+        this.signUp();
       }
     },
-    methods: {
-      signUp: function() {
-        firebase.auth().createUserWithEmailAndPassword(this.email, this.password).then(
-          (user) => {
-            this.$router.replace('hello')
+    signUp: function() {
+      firebase
+        .auth()
+        .createUserWithEmailAndPassword(this.email, this.password)
+        .then(
+          user => {
+            this.$store.commit("user", user);
+            this.$router.replace("hello");
           },
-          (err) => {
-            alert('Oops. ' + err.message)
+          err => {
+            alert("Oops. " + err.message);
           }
         );
-      }
     }
   }
+};
 </script>
 
-<style scoped>
-  .signUp {
-    margin-top: 40px;
-  }
-  input {
-    margin: 10px 0;
-    width: 20%;
-    padding: 15px;
-  }
-  button {
-    margin-top: 10px;
-    width: 10%;
-    cursor: pointer;
-  }
-  span {
-    display: block;
-    margin-top: 20px;
-    font-size: 11px;
-  }
-</style>

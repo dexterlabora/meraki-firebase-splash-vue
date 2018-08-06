@@ -7,6 +7,8 @@ yarn-error.log*
 test/unit/coverage
 test/e2e/reports
 selenium-debug.log
+firebaseConfigs.local.js
+merakiConfigs.local.ts
 
 # Editor directories and files
 .idea

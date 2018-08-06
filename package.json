@@ -1,9 +1,9 @@
 {
-  "name": "vue-firebase-tutorial",
+  "name": "meraki-firebase-splash-vue",
   "version": "1.0.0",
-  "description": "A Vue.js project using Firebase for authentication.",
-  "author": "Anas Mammeri <anas.mammeri@gmail.com>",
-  "private": true,
+  "description": "A Meraki Captive Portal using Vue.js and Firebase - Authentication, Hosting, Database, Functions",
+  "author": "Cory Guynn <cguynn@gmail.com>",
+  "private": false,
   "scripts": {
     "dev": "node build/dev-server.js",
     "start": "node build/dev-server.js",
@@ -13,9 +13,16 @@
     "test": "npm run unit && npm run e2e"
   },
   "dependencies": {
+    "axios": "^0.18.0",
     "firebase": "^4.1.3",
+    "firebase-functions": "^2.0.2",
+    "json-bigint": "^0.3.0",
+    "material-design-icons-iconfont": "^3.0.3",
     "vue": "^2.3.3",
-    "vue-router": "^2.3.1"
+    "vue-axios": "^2.1.2",
+    "vue-router": "^2.3.1",
+    "vuetify": "^1.1.9",
+    "vuex": "^3.0.1"
   },
   "devDependencies": {
     "autoprefixer": "^6.7.2",
